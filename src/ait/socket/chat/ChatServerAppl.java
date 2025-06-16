@@ -29,16 +29,14 @@ public class ChatServerAppl {
 
 
         ExecutorService executorService = Executors.newFixedThreadPool(2);
-        //сервер должен быть постоянно запущен и ждать, что кто-то к нему обратиться
+        //The server must be constantly running and waiting for someone to connect to it.
         try (ServerSocket serverSocket = new ServerSocket(port);) {
             while(true) {
                 System.out.println("Server waiting...");
-                Socket socket = serverSocket.accept(); // Главная функция сервера. Когда клиент подключается, сервер должен быть
-                // в состоянии accept
+                Socket socket = serverSocket.accept(); // The main function of the server: when a client connects, the server must be in the accept state.
                 System.out.println("Connection established");
                 System.out.println("Client host:" + socket.getInetAddress() + " : " + socket.getPort());
-//                executorService.execute(new ClientHandler(socket));
-                sender.addClient(socket); // добавили PrintWriter
+                sender.addClient(socket); // addong connected client to the PrintWriter for sending messages.
                 ChatServerReceiver receiver = new ChatServerReceiver(socket, messageBox); // create receiver
                 executorService.execute(receiver);
             }

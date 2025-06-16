@@ -13,12 +13,12 @@ import java.util.concurrent.BlockingQueue;
  */
 public class ChatServerSender implements Runnable{
     private final BlockingQueue<String> messageBox;
-    //нужен PrintWriter для каждого клиента
+    //We need PrintWriter for each client
     private final Set<PrintWriter> clients;
 
     public ChatServerSender(BlockingQueue<String> messageBox) {
         this.messageBox = messageBox;
-        clients = new HashSet<>(); // сервер подняли клиентов еще нет список пуст.
+        clients = new HashSet<>(); // At starting we have 0 clients, connected to out server
     }
 
     public boolean addClient(Socket socket) throws IOException {
