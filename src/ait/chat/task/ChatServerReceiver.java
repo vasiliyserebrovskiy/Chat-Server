@@ -1,4 +1,4 @@
-package ait.socket.chat.task;
+package ait.chat.task;
 
 import java.io.BufferedReader;
 import java.io.IOException;

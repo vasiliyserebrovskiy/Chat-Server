@@ -1,9 +1,9 @@
-package ait.socket.chat;
+package ait.chat;
 
 
 
-import ait.socket.chat.task.ChatServerReceiver;
-import ait.socket.chat.task.ChatServerSender;
+import ait.chat.task.ChatServerReceiver;
+import ait.chat.task.ChatServerSender;
 
 import java.io.IOException;
 import java.net.ServerSocket;
