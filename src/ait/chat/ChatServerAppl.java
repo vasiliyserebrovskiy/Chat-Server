@@ -17,7 +17,7 @@ import java.util.concurrent.*;
 public class ChatServerAppl {
     public static void main(String[] args) throws InterruptedException {
 
-        int port = 9000; // кого слушаем
+        int port = 9000;
 
         BlockingQueue<String> messageBox = new ArrayBlockingQueue<>(10);
 
