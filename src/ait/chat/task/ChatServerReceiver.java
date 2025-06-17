@@ -27,7 +27,8 @@ public class ChatServerReceiver implements Runnable{
             while (true) {
                 String message = socketReader.readLine();
                 if (message == null) {
-                    System.out.println("Connection: " + socket.getInetAddress() + " : " + socket.getPort() + ", closed");
+                    //System.out.println("Connection: " + socket.getInetAddress() + " : " + socket.getPort() + ", closed");
+                    throw new RuntimeException();
                     break;
                 }
                 System.out.println("Server receive: " + message);
@@ -35,7 +36,8 @@ public class ChatServerReceiver implements Runnable{
                 messageBox.add(message);
             }
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            System.out.println("Connection: " + socket.getInetAddress() + " : " + socket.getPort() + ", closed");
+            //throw new RuntimeException(e);
         }
     }
 }
