@@ -29,7 +29,7 @@ public class ChatServerReceiver implements Runnable{
                 if (message == null) {
                     //System.out.println("Connection: " + socket.getInetAddress() + " : " + socket.getPort() + ", closed");
                     throw new RuntimeException();
-                    break;
+                   // break;
                 }
                 System.out.println("Server receive: " + message);
                 //Add message to the messageBox
