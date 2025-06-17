@@ -33,11 +33,14 @@ public class ChatServerReceiver implements Runnable{
                 }
                 System.out.println("Server receive: " + message);
                 //Add message to the messageBox
-                messageBox.add(message);
+                messageBox.put(message); // put use await when max achieved.
+                //add throw exeption wneh ,ax achieved
             }
         } catch (IOException e) {
             System.out.println("Connection: " + socket.getInetAddress() + " : " + socket.getPort() + ", closed");
             //throw new RuntimeException(e);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
         }
     }
 }
