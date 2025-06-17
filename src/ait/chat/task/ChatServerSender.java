@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 import java.util.concurrent.BlockingQueue;
 
@@ -21,7 +22,8 @@ public class ChatServerSender implements Runnable{
         clients = new HashSet<>(); // At starting we have 0 clients, connected to out server
     }
 
-    public boolean addClient(Socket socket) throws IOException {
+    // add and send operation must be synchronized
+    public synchronized boolean addClient(Socket socket) throws IOException {
         return clients.add(new PrintWriter(socket.getOutputStream(), true));
     }
 
@@ -30,7 +32,20 @@ public class ChatServerSender implements Runnable{
         try {
             while(true) {
                 String message = messageBox.take();
-                clients.forEach(c -> c.println(message));
+                //Use iterator to work with old PrintWriters for disconnected clients
+                //We need bad PrintWriter remove from clients HashSet
+                synchronized (this) {
+                    Iterator<PrintWriter> iterator = clients.iterator();
+                    while (iterator.hasNext()) {
+                        PrintWriter clientWriter = iterator.next();
+                        if (clientWriter.checkError()) {
+                            iterator.remove();
+                        } else {
+                            clientWriter.println(message);
+                        }
+                    }
+                    System.out.println("Size = " + clients.size());
+                }
             }
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
